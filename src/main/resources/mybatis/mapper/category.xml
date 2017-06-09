@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category" >
+	<insert id="insert" parameterType="categoryvo">
+	insert into category values(null,#{no},#{name},#{content},now());
+	</insert>
+	
+	<select id="getList" resultType="categoryvo" parameterType="string">
+	<![CDATA[
+	select a.category_no,a.name,a.content 
+	from category as a
+    where a.no=(select a.no from user as a,blog as b where a.no=b.no and a.id=#{userid});
+	]]>
+	</select>
+	<insert id="insertCategory" parameterType="hashmap">
+	<![CDATA[
+	insert into category values(null,(select no from user where id='rwano85'),#{name},#{content},now());
+	]]>
+	</insert>
+</mapper>
